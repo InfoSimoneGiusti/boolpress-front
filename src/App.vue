@@ -11,7 +11,9 @@
 
 <template>
   <AppHeader></AppHeader>
-  <router-view></router-view>
+  <div class="container">
+    <router-view></router-view>
+  </div>
 </template>
 
 <style lang="scss">

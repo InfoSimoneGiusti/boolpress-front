@@ -4,6 +4,7 @@ import AppHome from './pages/AppHome.vue';
 import AppContact from './pages/AppContact.vue';
 import PostList from './pages/PostList.vue';
 import SinglePost from './pages/SinglePost.vue';
+import NotFound from './pages/NotFound.vue';
 
 const router = createRouter(
     {
@@ -25,9 +26,14 @@ const router = createRouter(
                 component: PostList
             },
             {
-                path: '/blog/:slug',
+                path: '/blog/:cicciobello',
                 name: 'single-post',
                 component: SinglePost
+            },
+            {
+                path: '/:pathMatch(.*)*',
+                name: 'not-found',
+                component: NotFound
             }
         ]
     }

@@ -3,8 +3,11 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-4" v-for="post in posts">
+            <div v-if="loading == false" class="col-4" v-for="post in posts">
                 <AppPost :post="post"></AppPost>
+            </div>
+            <div v-else>
+                <img src="/loader.gif" alt="caricamento in corso..." />
             </div>
 
             <nav aria-label="Page navigation example">
@@ -17,6 +20,16 @@
                             Previous
                         </button>
                     </li>
+
+                    <li class="page-item" v-for="page in lastPage" :class="{'active': page==currentPage}">
+                        <button 
+                            @click="getPosts(page)" 
+                            :class="{'page-link': true}"
+                        >
+                            {{ page }}
+                        </button>
+                    </li>
+
                     <li class="page-item">
                         <button 
                             @click="getPosts(currentPage + 1)" 
@@ -46,7 +59,8 @@
                 posts: [],
                 store,
                 currentPage: 1,
-                lastPage: null
+                lastPage: null,
+                loading: true
             }
         },
         components: {
@@ -54,7 +68,7 @@
         },
         methods: {
             getPosts(gotoPage) {
-                console.log('Ciao mondo!');
+                this.loading = true;
                 axios.get(`${this.store.baseUrl}/api/posts`,
                     {
                         params: {
@@ -67,6 +81,7 @@
                     this.posts = response.data.results.data;
                     this.currentPage = response.data.results.current_page;
                     this.lastPage = response.data.results.last_page;
+                    this.loading = false;
                 });
             },
             
