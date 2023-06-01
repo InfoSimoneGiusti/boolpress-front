@@ -34,7 +34,7 @@
         mounted() {
             const slug = this.$route.params.cicciobello;
             
-            axios.get(`${this.store.baseUrl}/api/post/${slug}`)
+            axios.get(`${this.store.baseUrl}/api/posts/${slug}`)
             .then(response => {
                 if (response.data.success == true) {
                     this.post = response.data.post;
