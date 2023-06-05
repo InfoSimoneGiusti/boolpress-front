@@ -31,21 +31,33 @@
                 post: null
             }
         },
-        mounted() {
-            const slug = this.$route.params.cicciobello;
+        methods: {
+            getPost() {
+                const slug = this.$route.params.cicciobello;
             
-            axios.get(`${this.store.baseUrl}/api/posts/${slug}`)
-            .then(response => {
-                if (response.data.success == true) {
-                    this.post = response.data.post;
-                } else {
-                    //alert(response.data.error);
+                axios.get(`${this.store.baseUrl}/api/posts/${slug}`)
+                .then(response => {
+                    if (response.data.success == true) {
+                        this.post = response.data.post;
+                    } else {
+                        //alert(response.data.error);
 
-                    this.$router.push({name: 'not-found'});
+                        this.$router.push({name: 'not-found'});
+                    }
+                    
+                });
+            }
+        },
+        created() {
+            this.$watch(
+                () => this.$route.params,
+                (toParams, previousParams) => {
+                    this.getPost();
                 }
-                
-            });
-
+            )
+        },
+        mounted() {
+            this.getPost();
         }
     }
 </script>
